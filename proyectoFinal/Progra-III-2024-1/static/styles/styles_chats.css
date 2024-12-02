@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+#welcome-message {
+    display: none;
+    color: #e0e0e0;
+    text-align: right;
+    padding: 20px;
+    font-size: 2em;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+
+
+/* Ajustes para que el chat ocupe toda la pantalla */
+.chat-app {
+    display: flex;
+    height: 85vh;
+    width: 100%;
+}
+
+/* Estilos para la Columna Izquierda (Lista de Chats) */
+.chat-list-section {
+    width: 35%;
+    margin-top: 30px;
+    background-color: #1f1f1f;
+    color: #bab4b4;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ajustar al 100% de la altura de la ventana */
+}
+
+.chat-list-header {
+    padding: 5px;
+    background-color: rgb(38, 36, 36);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-list-header .profile-icon {
+    font-size: 2.5em;
+}
+
+.chat-list-header h2 {
+    margin-left: 10px;
+    font-size: 1.5em;
+}
+
+.chat-list-body {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.chat-list-item {
+    padding: 15px;
+    border-bottom: 1px solid #3d3d3d;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-list-item:hover {
+    background-color: #333333;
+}
+
+.chat-item-photo img {
+    width: 50px; /* Asegúrate de que coincida con el tamaño del contenedor */
+    height: 50px;
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen se recorte correctamente si no es cuadrada */
+    display: block; /* Elimina posibles espacios no deseados */
+}
+
+.chat-item-photo i {
+    color: #e0e0e0;
+    font-size: 1.5em;
+}
+
+.chat-item-details h4 {
+    margin: 0;
+    font-size: 1.1em;
+    margin-left:  7px;
+}
+
+.chat-item-details p {
+    margin: 5px 0 0;
+   
+    font-size: 0.9em;
+    color: #bdbdbd;
+}
+
+/* Estilos para la Columna Derecha (Chat Activo) */
+.chat-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%; /* Ajustar al 100% de la altura de la ventana */
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    background-color: #212121;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ajustar al 100% de la altura de la ventana */
+}
+
+.chat-header {
+    background-color: rgb(76, 76, 76);
+    color: white;
+    padding: px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.chat-header i {
+    margin-right: 10px;
+}
+
+.chat-body {
+    padding: 15px;
+    flex: 1;
+    overflow-y: auto;
+    background-color: #1a1a1a;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.message.bot .content {
+    background-color: #333333;
+    color: #e0e0e0;
+}
+
+.message.user .content {
+    background-color: #3d5afe;
+    color: #e0e0e0;
+    margin-left: auto;
+}
+
+.message .content {
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+    position: relative;
+    font-size: 0.9em;
+}
+
+.message .icon {
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: #8a94cb;
+}
+
+.chat-footer {
+    padding: 15px;
+    background-color: #212121;
+    display: flex;
+    border-top: 1px solid #424242;
+    
+    
+}
+
+.chat-footer input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #3a2bbd;
+    border-radius: 20px;
+    background-color: #121212;
+    color: #e0e0e0;
+    font-size: 0.9em;
+    outline: none;
+}
+
+.chat-footer button {
+    background-color: #3d5afe;
+    border: none;
+    color: #e0e0e0;
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.chat-footer button:hover {
+    background-color: #304ffe;
+}
+
+.chat-footer .fa-paper-plane {
+    font-size: 1.2em;
+}
+
+.chat-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Hace la imagen circular */
+    margin-right: 10px; /* Espacio entre la imagen y el nombre */
+}

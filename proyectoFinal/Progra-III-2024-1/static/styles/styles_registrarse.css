@@ -1,0 +1,189 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-box {
+    display: flex;
+    background-color: #fff;
+    
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 850px; /* Aumentado para dar más espacio */
+    height: auto; /* Ajustable según el contenido */
+    max-height: 90vh; /* Para que no exceda la pantalla */
+    overflow-y: auto; /* Permitir desplazamiento si es necesario */
+    position: relative;
+}
+
+.login-left {
+    width: 55%; /* Ajustado para más espacio */
+    padding: 30px;
+    background-color: #ffffff;
+    z-index: 1;
+    overflow-y: auto;
+}
+
+.login-left h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #171212;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.login-left {
+    border: 2px solid #171212;
+}
+
+.form-group button {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-group button:hover {
+    background-color: #333;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+.login-right {
+    width: 45%; /* Ajustado */
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    overflow-y: auto;
+    text-align: center;
+    position: relative;
+}
+
+.image-frame img {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 5px;
+}
+
+.login-right p {
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    word-wrap: break-word;
+    padding: 0 50px;
+}
+
+/* Estilos adicionales */
+.img-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.img-container .logo-image {
+    width: 125px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    display: none;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 38px;
+    cursor: pointer;
+}
+
+/* Contenedor para el campo de input y el ícono */
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding-right: 40px; /* Deja espacio para el ícono */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Animaciones */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards; /* Animación de entrada */
+}
+
+.fade-out {
+    opacity: 1;
+    animation: fadeOut 1s forwards; /* Animación de salida */
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}

@@ -1,0 +1,211 @@
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards; /* Animación de entrada */
+}
+
+.fade-out {
+    opacity: 1;
+    animation: fadeOut 1s forwards; /* Animación de salida */
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+body {
+    background: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #000;
+    padding: 0.05rem; /* Reducido aún más */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease-in; /* Animación aplicada */
+}
+
+.navbar img {
+    height: 30px; /* Sin cambios */
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 0.2rem; /* Reducido */
+    font-weight: bold;
+    font-size: 1.4rem; /* Sin cambios */
+}
+
+.container {
+    /* Sin cambios */
+    padding: 0 0.1rem; /* Reducido */
+    animation: fadeIn 1s ease-in; /* Animación aplicada */
+}
+
+.title {
+    text-align: center;
+    /* Reducido */
+    font-size: 2.2rem; /* Sin cambios */
+    font-weight: bold;
+    color: #333;
+}
+
+.form-section {
+    background-color: #fff;
+    padding: 1rem; /* Aumentado para más espacio interno */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sin cambios */
+}
+
+.form-section h2 {
+    text-align: center;
+    margin-bottom: 0.5rem; /* Reducido */
+    font-size: 1.8rem; /* Sin cambios */
+}
+
+.form-label {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1rem; /* Sin cambios */
+    margin-bottom: 0.2rem; /* Sin cambios */
+}
+
+.btn-custom {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.3rem; /* Reducido para menos altura */
+    margin: 0.2rem 0; /* Reducido el espacio vertical entre botones */
+    font-size: 1.1rem; /* Sin cambios */
+    display: block; /* Asegura que el botón se comporte como un bloque */
+    width: 100%; /* Ajusta el ancho del botón al 100% del contenedor */
+    cursor: pointer;
+
+}
+
+
+
+.brand-button.selected::after {
+    content: '\2713'; /* Caracter del chequesito */
+    color: #28a745; /* Color verde */
+    font-size: 30px; /* Ajusta el tamaño */
+    position: absolute;
+    top: 5px; /* Posición en la parte superior */
+    right: 5px; /* Posición en la parte derecha */
+    font-weight: bold;
+    pointer-events: none; /* Asegúrate de que el checkmark no interfiera con el clic */
+}
+
+.btn-custom:hover {
+    background-color: #555;
+}
+
+.image-preview {
+    width: 10%; /* Reducido */
+    border-radius: 8px;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 0.5rem; /* Sin cambios */
+}
+
+.brand-selection {
+    margin-top: 1rem; /* Sin cambios */
+    text-align: center; /* Centrado */
+}
+
+.brand-selection-title {
+    font-size: 1.5rem; /* Reducido */
+    margin-bottom: 1.5rem; /* Espaciado inferior */
+}
+
+.brand-selection .row {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; /* Ajustado para asegurar espacio entre botones */
+}
+
+.brand-selection .col-4 {
+    display: flex;
+    justify-content: center; /* Alinea los botones al centro */
+    align-items: center;
+}
+
+.brand-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Asegura que el botón ocupe todo el espacio del contenedor */
+    height: 60px; /* Reducida aún más la altura */
+    padding: 0.2rem; /* Reducido el padding */
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.brand-button:hover {
+    background-color: #e9ecef; /* Cambio de color al pasar el cursor */
+}
+
+.brand-button img {
+    max-width: 40px; /* Reducido el tamaño de la imagen */
+    height: auto;
+    object-fit: contain;
+}
+
+.brand-button .brand {
+    font-weight: bold;
+    font-size: 0.7rem; /* Reducido aún más el tamaño de la fuente */
+    margin-top: 0.3rem;
+    color: #333;
+}
+
+#map {
+    height: 140px; /* Sin cambios */
+    margin-top: 0.5rem;
+    animation: fadeIn 1s ease-in; /* Animación aplicada */
+}
+
+#txtNombreVehiculo {
+    border: 2px solid #000;
+}
+
+#txtPrecio {
+    border: 2px solid #000;
+}
+
+#txtDescripcion {
+    border: 2px solid #000;
+}
+
+#imgVehiculo {
+    border: 2px solid #000;
+}
+
+#imgVehiculo2 {
+    border: 2px solid #000;
+}
+
+.brand-button {
+    border: 2px solid #000;
+
+}
+
+#map {
+    border: 2px solid #000;
+}

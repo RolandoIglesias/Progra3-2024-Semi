@@ -1,0 +1,142 @@
+{% extends "Barra_Menu.html" %}
+
+{% block title %}Perfil de {{ user['NombreCompleto'] }}{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles_profile.css') }}">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+
+<div class="profile-container">
+    <!-- Contenedor de la imagen de fondo -->
+    <div class="background-container">
+        <img id="background-image" 
+             src="{{ user.imgFondoUsuario or url_for('static', filename='imagenes/default-background.png') }}" 
+             alt="Imagen de fondo" class="background-image">
+
+        <!-- Botón de editar perfil en la parte superior izquierda -->
+        {% if user['user_id'] == user_logueado %}
+        <a href="{{ url_for('edit_profile', user_id=user['user_id']) }}" class="edit-profile-btn">
+            <i class="fas fa-edit edit-icon"></i> Editar Perfil
+        </a>
+        {% endif %}
+
+        <p>ID del usuario que se está viendo: {{ user['user_id'] }}</p>
+        <p>ID del usuario logueado: {{ user_logueado }}</p>
+    </div>
+
+    <!-- Imagen de perfil -->
+    <div class="profile-picture-container">
+        <img id="profile-picture" 
+             src="{{ user.imgPerfilUsuario or url_for('static', filename='imagenes/default-profile.png') }}" 
+             alt="Imagen de perfil" class="profile-picture">
+    </div>
+
+    <h1 id="NombreCompleto">Nombre: {{ user['NombreCompleto'] }}</h1>
+
+    <!-- Contenedor de publicaciones, correo y teléfono -->
+    <div class="info-container">
+        <div class="publicaciones">
+            <span id="num-publicaciones" class="info-number">{{ publicacion_perfil|length }}</span>
+            <span>Publicaciones</span>
+        </div>
+
+        <p id="username">Correo: {{ user['username'] }}</p>
+
+        <div class="telefono">
+            <span id="NumeroTelefono">Teléfono: {{ user['NumeroTelefono'] }}</span>
+        </div>
+    </div>
+
+    <div class="mis_publicaciones">
+        <span>Publicaciones:</span>
+    </div>
+    
+   <!-- Lista de publicaciones -->
+<div class="container_publicaciones">
+    {% for publicacion in publicacion_perfil %}
+    <div class="publicacion">
+        <!-- Imagen del vehículo -->
+        <div class="publicacion-img">
+            <img class="img_publicacion" src="{{ url_for('imagenes', filename=publicacion['imgVehiculo']) }}" alt="Imagen del vehículo">
+        </div>
+        
+        <!-- Información del vehículo -->
+        <div class="info_publicacion">
+            <h2 class="nombre_vehiculo">{{ publicacion['nombre_vehiculo'] }}</h2>
+            <p class="precio_vehiculo">Precio: ${{ publicacion['precio'] }}</p>
+        </div>
+
+        <!-- Botón para eliminar la publicación -->
+        <div class="accion_publicacion">
+            {% if user_logueado == publicacion['user_id'] %}
+            <form method="POST" action="{{ url_for('eliminar_publicacion') }}">
+                <input type="hidden" name="publicacion_id" value="{{ publicacion['Id_Publicacion'] }}">
+                <button type="submit" class="btn_eliminar">
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
+            </form>
+            {% else %}
+            <!-- Mostrar un mensaje o un botón desactivado si no es el autor -->
+            <button class="btn_eliminar" disabled>
+               
+            </button>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Seleccionamos todos los botones de eliminar
+        const deleteButtons = document.querySelectorAll(".btn_eliminar");
+
+        deleteButtons.forEach(button => {
+            button.addEventListener("click", (event) => {
+                event.preventDefault(); // Prevenimos el comportamiento por defecto del botón
+
+                // Confirmación antes de eliminar usando alertify.confirm()
+                alertify.confirm("Confirmar eliminación", "¿Estás seguro de que deseas eliminar esta publicación?",
+                    async function() {
+                        // Si el usuario confirma, se obtiene el ID de la publicación
+                        const publicacionId = button.closest("form").querySelector("[name='publicacion_id']").value;
+
+                        console.log("ID de la publicación que busco:", publicacionId);
+
+                        try {
+                            // Enviar solicitud al servidor usando Fetch
+                            const response = await fetch("{{ url_for('eliminar_publicacion') }}", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({ publicacion_id: publicacionId })
+                            });
+
+                            if (response.ok) {
+                                // Eliminamos la tarjeta del DOM si la eliminación es exitosa
+                                const publicacionElement = button.closest(".publicacion");
+                                publicacionElement.remove();
+                                alertify.success("¡Publicación eliminada exitosamente!");
+                            } else {
+                                const errorData = await response.json();
+                                alertify.error(`Error al eliminar: ${errorData.message}`);
+                            }
+                        } catch (error) {
+                            console.error("Error al eliminar la publicación:", error);
+                            alertify.error("Ocurrió un error inesperado. Inténtalo de nuevo más tarde.");
+                        }
+                    },
+                    function() {
+                        // Si el usuario cancela la eliminación
+                        alertify.error("Operación cancelada");
+                    });
+            });
+        });
+    });
+</script>
+
+{% endblock %}

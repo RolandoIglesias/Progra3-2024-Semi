@@ -1,0 +1,214 @@
+
+{% extends "Barra_Menu.html" %}
+
+{% block title %}Chat de Usuarios{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles_chats.css') }}">
+    <div class="chat-app">
+        <!-- Columna Izquierda (Lista de Chats) -->
+        <div class="chat-list-section">
+            <div class="chat-list-header">
+                <div class="profile-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h2>Chats</h2>
+            </div>
+            <div class="chat-list-body">
+                <div class="chat-list-item" onclick="openChat('')">
+                    <div class="chat-item-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-item-details">
+                        
+                        
+                    </div>
+                </div>
+                <div class="chat-list-item" onclick="openChat('')">
+                    <div class="chat-item-photo">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="chat-item-details">
+                        
+                    </div>
+                </div>
+                <!-- Repetir para otros chats -->
+            </div>
+        </div>
+
+
+        <!-- Columna Derecha (Chat Activo) -->
+<div class="chat-section" id="chat-section" style="display: none;">
+    <div class="chat-container">
+        <div class="chat-header" id="chat-header" style="display: none;">
+            <img id="active-chat-photo" src="" alt="Foto de perfil" class="chat-photo">
+             <span id="active-chat-user">Mensajes</span>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <!-- Aquí se mostrarán los mensajes -->
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="message-input" placeholder="Escribe un mensaje..." autocomplete="off" style="display: none;" disabled>
+            <button onclick="sendMessage()" style="display: none;" disabled>
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const sessionUserId = {{ session_user_id }};
+    let activeContactId = null; // Variable global para almacenar el ID del contacto actual
+    let pollingInterval; // Intervalo para actualizar los mensajes
+
+    function sendMessage() {
+        const messageInput = document.getElementById("message-input");
+        const message = messageInput.value.trim();
+
+        if (message !== "" && activeContactId) {
+            addMessage("user", message); // Mostrar mensaje enviado por el usuario
+            messageInput.value = "";
+
+            // Enviar el mensaje al servidor
+            fetch('/enviar_mensaje', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ mensaje: message, user_receiver: activeContactId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.msg) {
+                    console.error('Error al enviar el mensaje:', data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            console.error("No se ha seleccionado un contacto o el mensaje está vacío.");
+        }
+    }
+
+    function openChat(contactoId, contactoNombre, contactoImg) {
+    activeContactId = contactoId; // Actualiza el contacto activo
+    document.getElementById('active-chat-user').textContent = contactoNombre; // Actualiza el nombre
+    
+    // Actualiza la imagen del usuario
+    const chatPhotoElement = document.getElementById('active-chat-photo');
+    chatPhotoElement.src = contactoImg; // Establece la URL de la imagen
+    chatPhotoElement.style.display = "block"; // Asegúrate de mostrar la imagen
+
+    cargarMensajes(contactoId); // Cargar mensajes de la conversación
+
+    // Iniciar el polling de mensajes cada 3 segundos
+    if (pollingInterval) clearInterval(pollingInterval);
+    pollingInterval = setInterval(() => actualizarMensajes(contactoId), 3000);
+
+    // Mostrar la columna derecha
+    document.getElementById("chat-section").style.display = "flex";
+
+    // Mostrar la cabecera, el input y el botón
+    document.getElementById("chat-header").style.display = "flex";
+    document.getElementById("message-input").style.display = "block";
+    document.getElementById("message-input").disabled = false;
+    document.querySelector(".chat-footer button").style.display = "block";
+    document.querySelector(".chat-footer button").disabled = false;
+
+    // Ocultar el mensaje de bienvenida
+    document.getElementById("welcome-message").style.display = "none";
+}
+
+
+
+// Llama a closeChat() cuando desees cerrar el chat (por ejemplo, al hacer clic en un botón de cerrar)
+
+function cargarContactos() {
+    fetch('/obtener_contactos')
+        .then(response => response.json())
+        .then(data => {
+            const chatListBody = document.querySelector(".chat-list-body");
+            chatListBody.innerHTML = ""; // Limpiar la lista actual
+            data.forEach(contacto => {
+                const chatItem = document.createElement("div");
+                chatItem.classList.add("chat-list-item");
+                chatItem.onclick = () => openChat(contacto.contacto_id, contacto.NombreCompleto, contacto.imgPerfilUsuario);
+
+                chatItem.innerHTML = `
+                    <div class="chat-item-photo">
+                        <img src="${contacto.imgPerfilUsuario}" alt="Foto de ${contacto.NombreCompleto}">
+                    </div>
+                    <div class="chat-item-details">
+                        <h4>${contacto.NombreCompleto}</h4>
+                    </div>
+                `;
+                chatListBody.appendChild(chatItem);
+            });
+        })
+        .catch(error => console.error('Error al cargar contactos:', error));
+}
+
+    function cargarMensajes(contactoId) {
+        fetch(`/obtener_mensajes?user_receiver=${contactoId}`)
+            .then(response => response.json())
+            .then(data => {
+                const chatBody = document.getElementById("chat-body");
+                chatBody.innerHTML = ""; // Limpiar los mensajes actuales
+
+                if (Array.isArray(data)) {
+                    data.forEach(mensaje => {
+                        const messageType = mensaje.user_sender === sessionUserId ? "user" : "bot";
+                        addMessage(messageType, mensaje.message);
+                    });
+                } else {
+                    console.error('Error al obtener los mensajes:', data.error);
+                }
+            })
+            .catch(error => console.error('Error al cargar mensajes:', error));
+    }
+
+    function actualizarMensajes(contactoId) {
+        fetch(`/obtener_mensajes?user_receiver=${contactoId}`)
+            .then(response => response.json())
+            .then(data => {
+                const chatBody = document.getElementById("chat-body");
+
+                if (Array.isArray(data)) {
+                    // Limpiar solo si hay mensajes nuevos
+                    chatBody.innerHTML = ""; 
+                    data.forEach(mensaje => {
+                        const messageType = mensaje.user_sender === sessionUserId ? "user" : "bot";
+                        addMessage(messageType, mensaje.message);
+                    });
+                }
+            })
+            .catch(error => console.error('Error al actualizar mensajes:', error));
+    }
+    function addMessage(type, message) {
+        const chatBody = document.getElementById("chat-body");
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message", type);
+
+        const contentElement = document.createElement("div");
+        contentElement.classList.add("content");
+        contentElement.textContent = message;
+
+        messageElement.appendChild(contentElement);
+        chatBody.appendChild(messageElement);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarContactos(); // Cargar contactos al iniciar la página
+    });
+
+    window.addEventListener('beforeunload', () => {
+        if (pollingInterval) clearInterval(pollingInterval); // Limpiar el intervalo cuando el usuario sale de la página
+    });
+</script>
+
+
+{% endblock %}
+

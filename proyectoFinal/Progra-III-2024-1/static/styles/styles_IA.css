@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+}
+
+.chat-section {
+    display: flex;
+    justify-content: flex-end; /* Alinear a la derecha */
+    align-items: center;
+    height: 100vh;
+}
+
+.chat-container {
+    width: 400px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 90%; /* Ocupa toda la altura */
+    margin-top: -40px;
+}
+
+.chat-header {
+    background-color: #4a90e2;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 600;
+    position: relative;
+}
+
+.chat-header .fa-robot {
+    margin-right: 10px;
+}
+
+.chat-body {
+    padding: 15px;
+    flex: 1;
+    overflow-y: auto; /* Permitir desplazamiento */
+    background-color: #f9f9f9;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.message.bot .content {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.message.user .content {
+    background-color: #4a90e2;
+    color: white;
+    margin-left: auto;
+}
+
+.message .content {
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+    position: relative;
+    font-size: 0.9em;
+}
+
+.message .icon {
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: #4a90e2;
+}
+
+.chat-footer {
+    padding: 15px;
+    background-color: white;
+    display: flex;
+    border-top: 1px solid #e6e6e6;
+}
+
+.chat-footer input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 0.9em;
+    outline: none;
+}
+
+.chat-footer button {
+    background-color: #4a90e2;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.chat-footer button:hover {
+    background-color: #357ab7;
+}
+
+.chat-footer .fa-paper-plane {
+    font-size: 1.2em;
+}
+
+.chat-footer input[type="text"]::placeholder {
+    color: #aaa;
+}
+
+.chat-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-body::-webkit-scrollbar-thumb {
+    background-color: #d4d4d4;
+    border-radius: 5px;
+}

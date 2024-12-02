@@ -1,0 +1,73 @@
+{
+    "intents": [
+        {
+            "tag": "saludos",
+            "patterns": ["hola", "que tal", "como estas", "buenos dias"],
+            "responses": ["Hola! En que puedo ayudarte", "Buenos dias, necesitas informacion sobre algun auto"]
+        },
+        {
+            "tag": "catalogo",
+            "patterns": [
+                "catalogo de autos disponibles",
+                "total de autos en el catalogo",
+                "autos disponibles",
+                "autos en el catalogo"
+                
+            ],
+            "responses": [
+                "El catalogo de autos que tenemos son: subaru brz, toyota gt86, nissan frontier, bmw m4 competition. Quieres mas detalles",
+                "subaru brz, toyota gt86, nissan frontier, bmw m4 competition"
+                
+            ]
+        },
+        {
+            "tag": "detalles de los vehiculos",
+            "patterns": [
+                "brindame informacion sobre el subaru brz",
+                "detalles del subaru brz",
+                "mas informacion sobre el subaru brz"
+               
+            ],
+            "responses": [
+                "Motor: 2.0L boxer de 200 hp, Tracción: Trasera.",
+                "Diseño: Coupé deportivo compacto, Manejo: Ágil y equilibrado.",
+                "Peso: Ligero, bajo centro de gravedad.",
+                "Ideal para: Conducción deportiva y entusiastas del manejo."
+            ]
+        },
+        {
+            "tag": "precios de los vehiculos",
+            "patterns": [
+               
+                "que precio tiene el bmw m4 competition"
+                
+            ],
+            "responses": [
+                "El precio de venta del bmw m4 competition es de 22500$ dolares",
+                "el bmw m4 competition tiene un precio de 22500$ dolares"
+            ]
+        },
+        {
+            "tag": "opinion del nissan frontier",
+            "patterns": [
+                "que opinas del nissan frontier",
+                "que tal esta el nissan frontier"
+                
+            ],
+            "responses": [
+                "El Nissan Frontier es una excelente opción dentro de las camionetas medianas, especialmente si estás buscando una combinación de durabilidad, capacidad de carga y un precio competitivo. Valorado en $23,000 dólares, parece estar en un rango de precio razonable para una camioneta de estas características."
+            ]
+        },
+       
+    
+        {
+            "tag": "no_entendido",
+            "patterns": [],
+            "responses": ["Lo siento, no entiendo la pregunta. ¿Podrias reformularla?", "No tengo informacion sobre eso."]
+        }
+
+       
+
+       
+    ]
+}

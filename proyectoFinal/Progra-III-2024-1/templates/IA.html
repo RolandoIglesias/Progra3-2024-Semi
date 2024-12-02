@@ -1,0 +1,36 @@
+{% extends "Barra_Menu.html" %}
+
+{% block title %}IA{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles_IA.css') }}">
+
+    <div class="chat-section">
+        <div class="chat-container">
+            <div class="chat-header">
+                <i class="fas fa-robot"></i> Asistente virtual de WillyMarketSV
+            </div>
+            <div class="chat-body" id="chat-body">
+                <!-- Aquí se mostrarán los mensajes -->
+                <div class="message bot">
+                    <div class="icon"><i class="fas fa-robot"></i></div>
+                    <div class="content">¡Hola! ¿En qué puedo ayudarte hoy?</div>
+                </div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="message-input" placeholder="Escribe un mensaje..." autocomplete="off">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        
+    </script>
+
+{% endblock %}
